@@ -38,19 +38,18 @@
         <img src="http://fibonachicken.herokuapp.com/static/zeckendorf.png">
       </p>
     </div>
-    
+
 		<div>
 			<div>
 			  <h2>자애로운 자여, 몇 명이나 먹이려고 하는고?</h2>
-			  <paper-input label="godofchicken" value="{{count}}">
+			  <paper-input label="god of chicken" value="{{count}}">
 			  	명을 먹이려고 하나이다.
 			  </paper-input>
 		  </div>
-		  <div>
-	  		그렇다면 {{result}}마리를 시키거라. 능히 {{count}}명을 먹이는데 부족함이 없느니라.
+		  <div id="result">
+		  	그렇다면 {{result}}마리를 시키거라. 능히 {{count}}명을 먹이는데 부족함이 없느니라.
 	 		</div>
 		</div>
-	<content></content>	
 	</template>
 
 	<script>
@@ -79,6 +78,9 @@
 	// Zeckendorf's theorem
 	var zeckendorf = function(n) {
 		var i = 1;
+		if ( n == undefined || n == '') {
+			return 0;
+		}
 		if (n < 0) {
 			return 1;
 		}
@@ -107,10 +109,9 @@
 	zeckendorf = cachify2(zeckendorf, cache2);
 
 	Polymer('fibona-chicken', {
-		count: "1",
-		result: "1",
 		countChanged: function() {
 			this.result = zeckendorf(this.count);
+			this.$.result.hidden = !!!this.result;	
 		},
 		toggleref: function(e) {
 			this.$.ref.hidden = !this.$.ref.hidden;
